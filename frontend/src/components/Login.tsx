@@ -34,6 +34,7 @@ const Login = () => {
     try {
       const res = await api.post(`/auth/login`, formData);
       if (res && res.status === 200) {
+        localStorage.setItem("userEmail", formData.email);
         login(res.data);
       } else {
         console.error("Invalid response:", res);

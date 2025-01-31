@@ -8,6 +8,7 @@ import ForgotPassword from "./components/ForgotPassword";
 import Home from "./components/Home";
 import Navbar from "./components/Navbar";
 import VenueDetails from "./components/VenueDetails";
+import SeatMap from "./components/seatmap";
 
 function App() {
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
@@ -33,6 +34,7 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/venue" element={<VenueDetails />} />
+        <Route path="/seatmap" element={<SeatMap />} />
       </Routes>
     </>
   );

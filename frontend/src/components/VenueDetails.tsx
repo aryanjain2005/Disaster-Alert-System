@@ -1,6 +1,6 @@
 import { api } from "@/utils/api";
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 
 interface Venue {
   _id: string;
@@ -13,7 +13,7 @@ interface Venue {
 const VenueDetails: React.FC = () => {
   const [searchParams] = useSearchParams();
   const venueId = searchParams.get("venueId");
-  console.log("venueId:", venueId);
+  const navigate = useNavigate();
   const [venue, setVenue] = useState<Venue | null>(null);
 
   // Allow multiple dates to be selected
@@ -42,6 +42,7 @@ const VenueDetails: React.FC = () => {
 
   // Handle multiple date selections
   const handleDateSelection = (date: string) => {
+    console.log(selectedDates);
     setSelectedDates((prev) =>
       prev.includes(date) ? prev.filter((d) => d !== date) : [...prev, date]
     );
@@ -54,14 +55,23 @@ const VenueDetails: React.FC = () => {
   };
 
   const handleSubmit = () => {
-    console.log({
+    if (!venueId || selectedDates.length === 0 || selectedTimes.length === 0) {
+      alert("Please select at least one date and time slot.");
+      return;
+    }
+
+    const selectionData = {
       venueId,
       selectedDates,
       selectedTimes,
       selectedNumber,
-    });
+    };
 
-    alert("Selection submitted successfully!");
+    // Store in localStorage
+    localStorage.setItem("venueSelection", JSON.stringify(selectionData));
+
+    // Navigate to SeatMap page
+    navigate(`/seatmap?venueId=${venueId}`);
   };
 
   if (!venue) return <p className="text-center text-lg">Loading venue...</p>;
@@ -82,7 +92,7 @@ const VenueDetails: React.FC = () => {
               className={`p-2 rounded-lg border ${
                 selectedDates.includes(date)
                   ? "bg-blue-500 text-white"
-                  : "bg-gray-200"
+                  : "bg-red-600 text-green-500"
               }`}
               onClick={() => handleDateSelection(date)}
             >
@@ -102,7 +112,7 @@ const VenueDetails: React.FC = () => {
               className={`p-2 rounded-lg border ${
                 selectedTimes.includes(i)
                   ? "bg-blue-500 text-white"
-                  : "bg-gray-200"
+                  : "bg-red-600 text-green-500"
               }`}
               onClick={() => handleTimeSelection(i)}
             >

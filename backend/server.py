@@ -50,7 +50,33 @@ def send_email_forgot(to_email, otp):
     msg = Message('Your OTP Code', sender=app.config['MAIL_USERNAME'], recipients=[to_email])
     msg.body = f'Your OTP code for changing the password is: {otp}. It expires in 10 minutes.'
     mail.send(msg)
+# Send OTP email for booking confirmation
+def send_booking_confirmation(email, selected_dates, selected_times, selected_seats, venue_name):
+    otp1 = generate_otp()
+    otp2 = generate_otp()
 
+    # Store OTPs in the database
+    otp_collection.update_one(
+        {'email': email},
+        {'$set': {'otp1': otp1, 'otp2': otp2, 'expires_at': datetime.utcnow() + timedelta(days=365)}},
+        upsert=True
+    )
+
+    # Send OTP confirmation email
+    msg = Message('Booking Confirmation & OTPs', sender=app.config['MAIL_USERNAME'], recipients=[email])
+    msg.body = f"""
+    Your booking for {venue_name} is confirmed. 
+
+    Dates: {', '.join(selected_dates)}
+    Times: {', '.join(map(str, selected_times))}
+    Seats: {', '.join(map(str, selected_seats))}
+
+    OTP 1: {otp1}
+    OTP 2: {otp2}
+
+    The OTPs will never expire and can be used for any future access to the system.
+    """
+    mail.send(msg)
 # Route: Send OTP
 @app.route('/auth/send-otp', methods=['POST'])
 def send_otp():
@@ -239,6 +265,94 @@ def get_venue_by_id():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+@app.route("/get_seatmap", methods=["POST"])
+def get_seatmap():
+    data = request.json
+    venue_id = data.get("venueId")
+    selected_dates = data.get("selectedDates", [])
+
+    venue = venues_collection.find_one({"_id": ObjectId(venue_id)})
+
+    if not venue:
+        return jsonify({"error": "Venue not found"}), 404
+
+    seatmap = venue.get("seatmap", [])
+
+    # Convert seatmap array to a dictionary for easy lookup
+    seatmap_dict = {entry["date"]: entry["seats"] for entry in seatmap}
+
+    updated = False
+
+    # Ensure seatmap contains entries for all selected dates
+    for date in selected_dates:
+        if date not in seatmap_dict:
+            # Initialize a new entry (24 time slots x 20 seats)
+            seatmap_dict[date] = [["free"] * 20 for _ in range(24)]
+            updated = True
+
+    # Convert back to list format for MongoDB storage
+    updated_seatmap = [{"date": date, "seats": seats} for date, seats in seatmap_dict.items()]
+
+    # Update database if new dates were added
+    if updated:
+        venues_collection.update_one({"_id": ObjectId(venue_id)}, {"$set": {"seatmap": updated_seatmap}})
+
+    # Prepare seatmap data for frontend
+    response_data = [{"date": entry["date"], "seats": entry["seats"]} for entry in updated_seatmap if entry["date"] in selected_dates]
+
+    return jsonify(response_data)
+
+@app.route("/book_seat", methods=["POST"])
+def book_seat():
+    data = request.json
+    venue_id = data.get("venueId")
+    selected_dates = data.get("selectedDates")
+    selected_times = data.get("selectedTimes")
+    selected_seats = data.get("selectedSeats")
+    email = data.get("email")
+
+    # Ensure all necessary data is provided
+    if not venue_id or not selected_dates or not selected_times or not selected_seats or not email:
+        print(venue_id, selected_dates, selected_times, selected_seats, email)
+        return jsonify({"error": "Missing required data"}), 400
+
+    # Fetch the venue from the database
+    venue = venues_collection.find_one({"_id": ObjectId(venue_id)})
+
+    if not venue:
+        return jsonify({"error": "Venue not found"}), 404
+
+    seatmap = venue.get("seatmap", [])
+
+    updated = False
+    # Convert seatmap to a dictionary for easy access
+    seatmap_dict = {entry["date"]: entry["seats"] for entry in seatmap}
+
+    # Loop through selected dates and times
+    for date in selected_dates:
+        if date in seatmap_dict:  # Ensure the date exists in seatmap
+            for time_slot in selected_times:
+                # Ensure the time_slot is within the valid range (24 hours)
+                if time_slot < len(seatmap_dict[date]):
+                    for seat_index in selected_seats:
+                        if seatmap_dict[date][time_slot][seat_index] == "free":
+                            # Mark seat as booked by the user email
+                            seatmap_dict[date][time_slot][seat_index] = email
+                            updated = True
+
+    # If updated, save the updated seatmap back to the database
+    if updated:
+        # Convert the dictionary back to a list format for MongoDB storage
+        updated_seatmap = [{"date": date, "seats": seats} for date, seats in seatmap_dict.items()]
+        venues_collection.update_one(
+            {"_id": ObjectId(venue_id)},
+            {"$set": {"seatmap": updated_seatmap}}
+        )
+        send_booking_confirmation(email, selected_dates, selected_times, selected_seats, venue["title"])
+
+        return jsonify({"message": "Seats booked successfully!"}), 200
+    else:
+        return jsonify({"error": "Failed to book the seats. They might already be booked."}), 400
 
 if __name__ == '__main__':
     app.run(debug=True)

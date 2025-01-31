@@ -2,7 +2,7 @@ import { DarkIcon, LightIcon, LoginIcon, LogoutIcon } from "@icons/nav";
 import { useLogin } from "./LoginContext";
 import { Link } from "react-router-dom";
 
-const Navbar: React.FC = () => {
+const Navbar = () => {
   const { loggedIn, logout, user } = useLogin();
 
   // Helper function to extract the first name from the full name

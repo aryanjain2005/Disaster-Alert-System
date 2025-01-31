@@ -6,6 +6,7 @@ from flask_cors import CORS
 from pymongo import MongoClient
 import random
 import os
+from bson import ObjectId
 from datetime import datetime, timedelta
 
 app = Flask(__name__)
@@ -217,6 +218,27 @@ def update_password():
     otp_collection.delete_one({"email": email})
 
     return jsonify({'success': True, 'message': 'Password updated successfully'}), 200
+
+@app.route('/venuebyID', methods=['GET'])
+def get_venue_by_id():
+    venue_id = request.args.get('venueId')  # Get venueId from query parameters
+    print(venue_id)
+    if not venue_id:
+        return jsonify({'error': 'Venue ID is required'}), 400
+
+    try:
+        # Convert venueId to ObjectId
+        venue_id = ObjectId(venue_id)
+
+        venue = venues_collection.find_one({"_id": venue_id})
+        if not venue:
+            return jsonify({'error': 'Venue not found'}), 404
+
+        venue['_id'] = str(venue['_id'])  # Convert ObjectId to string for JSON serialization
+        return jsonify(venue), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
 
 if __name__ == '__main__':
     app.run(debug=True)

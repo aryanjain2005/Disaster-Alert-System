@@ -1,5 +1,5 @@
-import { ForgotIcon } from "@icons/Auth";
-import { api } from "@utils/api";
+import { ForgotIcon } from "../icons/Auth";
+import { api } from "../utils/api";
 import { useState, ChangeEvent, FormEvent, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useLogin } from "./LoginContext";

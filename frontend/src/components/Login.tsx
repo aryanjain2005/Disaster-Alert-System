@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import { useLogin } from "@/components/LoginContext";
-import { HideEye, LoginIcon, ShowEye } from "@icons/Auth";
-import { api } from "@utils/api";
+import { useLogin } from "../components/LoginContext";
+import { HideEye, LoginIcon, ShowEye } from "../icons/Auth";
+import { api } from "../utils/api";
 
 const Login = () => {
   const { login, user } = useLogin();

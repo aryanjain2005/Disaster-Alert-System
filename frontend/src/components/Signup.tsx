@@ -1,5 +1,5 @@
-import { HideEye, ShowEye, SignupIcon } from "@icons/Auth";
-import { api } from "@/utils/api";
+import { HideEye, ShowEye, SignupIcon } from "../icons/Auth";
+import { api } from "../utils/api";
 import { useState, ChangeEvent, FormEvent } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";

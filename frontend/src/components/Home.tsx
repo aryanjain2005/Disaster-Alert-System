@@ -1,6 +1,6 @@
-import VenueCard from "@/components/VenueCard";
-import { api } from "@/utils/api";
-import useDeviceSize from "@/utils/useDeviceSize";
+import VenueCard from "../components/VenueCard";
+import { api } from "../utils/api";
+import useDeviceSize from "../utils/useDeviceSize";
 import { useEffect, useState } from "react";
 
 interface Venue {

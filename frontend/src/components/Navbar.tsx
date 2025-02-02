@@ -1,9 +1,9 @@
-import { DarkIcon, LightIcon, LoginIcon, LogoutIcon } from "@icons/nav";
+import { DarkIcon, LightIcon, LoginIcon, LogoutIcon } from "../icons/nav";
 import { useLogin } from "./LoginContext";
-import DarkModeToggle from "@utils/DarkModeToggle";
+import DarkModeToggle from "../utils/DarkModeToggle";
 import { Link } from "react-router-dom";
-import logol from "@/assets/logospslight.png";
-import logod from "@/assets/logospsdark.png";
+import logol from "../assets/logospslight.png";
+import logod from "../assets/logospsdark.png";
 
 const Navbar = () => {
   const { loggedIn, logout, user } = useLogin();

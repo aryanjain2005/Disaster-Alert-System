@@ -4,15 +4,16 @@
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
   ],
+{
   "compilerOptions": {
-    "baseUrl": "./",
+    "baseUrl": "./src",  // Change to "src" so paths resolve correctly
     "paths": {
-      "@/": ["src/"],
-      "@components/*": ["src/components/*"],
-      "@pages/*": ["src/pages/*"],
-      "@utils/*": ["src/utils/*"],
-      "@assets/*": ["src/assets/*"],
-      "@icons/*": ["src/icons/*"]
+      "@/*": ["*"],
+      "@components/*": ["components/*"],
+      "@pages/*": ["pages/*"],
+      "@utils/*": ["utils/*"],
+      "@assets/*": ["assets/*"],
+      "@icons/*": ["icons/*"]
     }
   }
 }

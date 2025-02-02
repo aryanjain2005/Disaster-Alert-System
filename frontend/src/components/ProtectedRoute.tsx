@@ -1,5 +1,5 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
-import { useLogin } from "@/components/LoginContext";
+import { useLogin } from "../components/LoginContext";
 
 const ProtectedRoute = () => {
   const { loggedIn } = useLogin();

@@ -1,17 +1,17 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { useEffect } from "react";
-import Login from "@components/Login";
-import Signup from "@components/Signup";
-import GetOTP from "@components/GetOTP";
-import UpdatePassword from "@components/UpdatePassword";
+import Login from "./components/Login";
+import Signup from "./components/Signup";
+import GetOTP from "./components/GetOTP";
+import UpdatePassword from "./components/UpdatePassword";
 import ForgotPassword from "./components/ForgotPassword";
 import Home from "./components/Home";
 import Navbar from "./components/Navbar";
 import VenueDetails from "./components/VenueDetails";
 import SeatMap from "./components/seatmap";
-import { LoginProvider } from "@/components/LoginContext";
+import { LoginProvider } from "./components/LoginContext";
 import { NextUIProvider } from "@nextui-org/react";
-import ProtectedRoute from "@components/ProtectedRoute";
+import ProtectedRoute from "./components/ProtectedRoute";
 import Footer from "./components/Footer";
 function App() {
   useEffect(() => {

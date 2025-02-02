@@ -3,6 +3,8 @@ import { api } from "@/utils/api";
 import { useState, ChangeEvent, FormEvent } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { useLogin } from "./LoginContext";
+import { useEffect } from "react";
 
 interface FormData {
   name: string;
@@ -14,7 +16,10 @@ interface FormData {
 }
 
 const Signup = () => {
+  const { login, user } = useLogin();
   const location = useLocation();
+  const navigate = useNavigate();
+  const from = location.state?.from ?? { pathname: "/home", search: "" };
   const otpEmail = (location.state?.email as string) ?? "";
   const [formData, setFormData] = useState<FormData>({
     name: "",
@@ -26,8 +31,6 @@ const Signup = () => {
   });
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-  const navigate = useNavigate();
-
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -67,7 +70,11 @@ const Signup = () => {
       setIsSubmitting(false);
     }
   };
-
+  useEffect(() => {
+    if (user) {
+      navigate(from.pathname + from.search);
+    }
+  }, [user]);
   return (
     <div className="-mt-10 flex w-full flex-col items-center bg-transparent dark:bg-gradient-to-tr dark:from-transparent dark:via-transparent dark:to-red-900 p-4 sm:p-12">
       <div className="flex gap-8 max-sm:w-full items-center justify-between rounded-lg bg-[#FFFEF9] shadow-xl dark:bg-[#19141459]/35 p-4 sm:p-8">

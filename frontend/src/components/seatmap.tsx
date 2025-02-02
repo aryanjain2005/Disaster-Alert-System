@@ -42,7 +42,6 @@ const SeatMap: React.FC = () => {
   }, [venueId, selectedDates]);
 
   useEffect(() => {
-    // Retrieve email from localStorage
     const storedEmail = localStorage.getItem("userEmail");
     if (storedEmail) {
       setUserEmail(storedEmail);
@@ -65,8 +64,8 @@ const SeatMap: React.FC = () => {
         : [...prevSeats, seatIndex]
     );
   };
+
   const handlePaymentSuccess = () => {
-    // Prepare the data for the booking API
     const bookingData = {
       venueId: venueId,
       selectedDates: selectedDates,
@@ -126,36 +125,44 @@ const SeatMap: React.FC = () => {
 
   return (
     <div className="flex flex-col items-center gap-6 p-6">
-      <h1 className="text-3xl font-bold">Seat Map</h1>
-      <p className="text-lg text-gray-600">Select your seats</p>
-      <div className="grid grid-cols-5 gap-2">
-        {Array.from({ length: 20 }).map((_, seatIndex) => (
+      <h1 className="text-3xl font-bold">Parking Map</h1>
+
+      {/* Seat Grid */}
+      <div className="flex flex-col md:flex-row w-full justify-between items-center sm:gap-10">
+        <div className="flex-grow rounded-lg border-4 p-4">
+          <div className="grid grid-cols-2 sm:grid-cols-10 gap-2 lg:pl-6 2xl:pl-12">
+            {Array.from({ length: 20 }).map((_, seatIndex) => (
+              <button
+                key={seatIndex}
+                className={`sm:w-12 sm:h-32 sm:my-3 w-32 h-12 rounded-lg border text-lg flex items-center justify-center ${
+                  isSeatAvailable(seatIndex)
+                    ? selectedSeats.includes(seatIndex)
+                      ? "bg-green-100 text-black"
+                      : "bg-white border-black text-green-600"
+                    : "bg-gray-400"
+                }`}
+                disabled={!isSeatAvailable(seatIndex)}
+                onClick={() => handleSeatSelection(seatIndex)}
+              >
+                {seatIndex + 1}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Payment Section */}
+        <div className="flex flex-col items-center gap-4 mt-6 md:mt-0">
+          <p className="text-xl font-semibold">Total Amount: ₹{totalAmount}</p>
+
           <button
-            key={seatIndex}
-            className={`w-12 h-12 rounded-lg border ${
-              isSeatAvailable(seatIndex)
-                ? selectedSeats.includes(seatIndex)
-                  ? "bg-green-500 text-white"
-                  : "bg-white border-black text-green-600"
-                : "bg-gray-400"
-            }`}
-            disabled={!isSeatAvailable(seatIndex)}
-            onClick={() => handleSeatSelection(seatIndex)}
+            className="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700"
+            onClick={() => setOpenRazorpay(true)}
+            disabled={totalAmount === 0}
           >
-            {seatIndex + 1}
+            Pay Now
           </button>
-        ))}
+        </div>
       </div>
-
-      <p className="text-xl font-semibold">Total Amount: ₹{totalAmount}</p>
-
-      <button
-        className="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700"
-        onClick={() => setOpenRazorpay(true)}
-        disabled={totalAmount === 0}
-      >
-        Pay Now
-      </button>
     </div>
   );
 };

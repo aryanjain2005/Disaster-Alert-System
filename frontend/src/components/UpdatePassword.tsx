@@ -1,8 +1,9 @@
 import { ForgotIcon, HideEye, ShowEye } from "@icons/Auth";
 import { api } from "@/utils/api";
-import { useState, ChangeEvent, FormEvent } from "react";
+import { useState, ChangeEvent, FormEvent, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { useLogin } from "./LoginContext";
 
 interface FormData {
   email: string;
@@ -11,9 +12,15 @@ interface FormData {
 }
 
 export default function UpdatePassword() {
+  const { login, user } = useLogin();
   const location = useLocation();
   const navigate = useNavigate();
-
+  const from = location.state?.from ?? { pathname: "/home", search: "" };
+  useEffect(() => {
+    if (user) {
+      navigate(from.pathname + from.search);
+    }
+  }, [user]);
   const [formData, setFormData] = useState<FormData>({
     email: (location.state?.email as string) || "",
     password: "",

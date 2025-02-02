@@ -1,5 +1,5 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Login from "@components/Login";
 import Signup from "@components/Signup";
 import GetOTP from "@components/GetOTP";
@@ -9,34 +9,42 @@ import Home from "./components/Home";
 import Navbar from "./components/Navbar";
 import VenueDetails from "./components/VenueDetails";
 import SeatMap from "./components/seatmap";
-
+import { LoginProvider } from "@/components/LoginContext";
+import { NextUIProvider } from "@nextui-org/react";
+import ProtectedRoute from "@components/ProtectedRoute";
 function App() {
-  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
-
   useEffect(() => {
-    if (theme === "dark") {
+    const storedTheme = localStorage.getItem("theme") || "light";
+    if (storedTheme === "dark") {
       document.body.classList.add("dark");
     } else {
       document.body.classList.remove("dark");
     }
-    localStorage.setItem("theme", theme);
-  }, [theme]); // React to changes in `theme`
+
+    console.log("Theme changed to", storedTheme);
+  }, []);
 
   return (
-    <>
-      <Navbar theme={theme} setTheme={setTheme} /> {/* Pass as props */}
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/getOTP" element={<GetOTP />} />
-        <Route path="/update" element={<UpdatePassword />} />
-        <Route path="/forgot" element={<ForgotPassword />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/" element={<Navigate to="/login" />} />
-        <Route path="/venue" element={<VenueDetails />} />
-        <Route path="/seatmap" element={<SeatMap />} />
-      </Routes>
-    </>
+    <BrowserRouter>
+      <NextUIProvider>
+        <LoginProvider>
+          <Navbar />
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/getOTP" element={<GetOTP />} />
+            <Route path="/update" element={<UpdatePassword />} />
+            <Route path="/forgot" element={<ForgotPassword />} />
+            <Route element={<ProtectedRoute />}>
+              <Route path="/home" element={<Home />} />
+              <Route path="/venue" element={<VenueDetails />} />
+              <Route path="/seatmap" element={<SeatMap />} />
+            </Route>
+            <Route path="*" element={<Navigate to="/home" />} />
+          </Routes>
+        </LoginProvider>{" "}
+      </NextUIProvider>
+    </BrowserRouter>
   );
 }
 

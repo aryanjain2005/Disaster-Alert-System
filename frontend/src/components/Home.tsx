@@ -43,13 +43,8 @@ const GrpCard: React.FC<GrpCardProps> = ({
 
   return (
     <div id={type} className="flex w-4/5 flex-col gap-2">
-      <p className="font-bn text-2xl text-[#E40C2B]">{type}</p>
-      <div className="rounded-xl flex flex-col items-center gap-2 bg-white dark:bg-[#212121] p-4 sm:gap-6 sm:p-6">
-        <div className="grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-4">
-          {venues.slice(0, showMore ? venues.length : limit).map((venue, i) => (
-            <VenueCard venue={venue} key={i} navigate={shouldNav} />
-          ))}
-        </div>
+      <div className="flex items-center justify-between w-full gap-2">
+        <p className="font-bn font-semibold text-3xl text-[#E40C2B]">{type}</p>
         {venues.length > limit && (
           <p
             className="w-fit font-inter cursor-pointer text-center text-sm hover:bg-gray-200 dark:hover:bg-gray-900 p-2 rounded-xl"
@@ -61,6 +56,14 @@ const GrpCard: React.FC<GrpCardProps> = ({
             {showMore ? "Show Less" : "Show More"}
           </p>
         )}
+      </div>
+
+      <div className="rounded-xl flex flex-col items-center gap-2 bg-white dark:bg-[#212121] p-4 sm:gap-6 sm:p-6">
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-4">
+          {venues.slice(0, showMore ? venues.length : limit).map((venue, i) => (
+            <VenueCard venue={venue} key={i} navigate={shouldNav} />
+          ))}
+        </div>
       </div>
     </div>
   );
@@ -82,7 +85,7 @@ const Home: React.FC = () => {
   }, []);
 
   return (
-    <div className="flex flex-col items-center gap-6">
+    <div className="flex flex-col items-center gap-6 py-10">
       {venues.length > 0 && <GrpCard type="Venues" venues={venues} />}
     </div>
   );

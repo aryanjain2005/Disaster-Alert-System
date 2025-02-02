@@ -1,13 +1,22 @@
 import { VerifyIcon } from "@icons/Auth";
 import { api } from "@/utils/api";
-import { useState, ChangeEvent, FormEvent } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState, ChangeEvent, FormEvent, useEffect } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useLogin } from "./LoginContext";
 import Swal from "sweetalert2";
 
 export default function GetOTP() {
   const [email, setEmail] = useState<string>("");
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const { login, user } = useLogin();
+  const location = useLocation();
   const navigate = useNavigate();
+  const from = location.state?.from ?? { pathname: "/home", search: "" };
+  useEffect(() => {
+    if (user) {
+      navigate(from.pathname + from.search);
+    }
+  }, [user]);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();

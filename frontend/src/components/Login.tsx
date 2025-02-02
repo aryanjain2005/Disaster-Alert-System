@@ -77,7 +77,7 @@ const Login = () => {
   };
 
   return (
-    <div className="-mt-10 flex w-full flex-col items-center bg-transparent dark:bg-gradient-to-tr dark:from-transparent dark:via-transparent dark:to-red-900 p-4 sm:p-12">
+    <div className="mt-20 min-h-screen flex w-full flex-col items-center bg-transparent dark:bg-gradient-to-tr dark:from-transparent dark:via-transparent dark:to-red-900 p-4 sm:p-12">
       <div className="flex gap-8 max-sm:w-full items-center justify-between rounded-lg bg-[#FFFEF9] shadow-xl dark:bg-[#19141459]/35 p-4 sm:p-8">
         <div className="h-[40vh] lg:h-[60vh] max-md:hidden">
           <LoginIcon />
@@ -91,7 +91,7 @@ const Login = () => {
             onSubmit={handleSubmit}
             className="flex w-full flex-col  gap-4 text-sm sm:text-lg items-center"
           >
-            <label className="flex flex-col gap-2 rounded-2xl w-full">
+            <label className="flex flex-col dark:text-[#FAFAFA] gap-2 rounded-2xl w-full">
               <span>Email</span>
               <input
                 type="email"
@@ -106,7 +106,7 @@ const Login = () => {
             </label>
             <label className="flex flex-col gap-1.5 rounded-2xl w-full items-end">
               <p className="flex gap-2 w-full">
-                <span className="details">Password</span>
+                <span className="details dark:text-[#FAFAFA]">Password</span>
                 <div
                   className="flex items-center w-8 cursor-pointer bg-transparent dark:bg-[#781111]/85 rounded-xl"
                   onClick={() => setShowPassword((prevState) => !prevState)}
@@ -135,7 +135,7 @@ const Login = () => {
               Login
             </button>
           </form>
-          <span className=" text-center ">
+          <span className=" text-center dark:text-[#FAFAFA]">
             Don't have an account?
             <Link className="ml-1 text-[#BD0F0F]" to="/getOTP">
               Signup

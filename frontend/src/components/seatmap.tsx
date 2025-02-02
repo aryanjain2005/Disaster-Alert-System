@@ -152,22 +152,21 @@ const SeatMap: React.FC = () => {
     <div
       className={`${
         isBlurring ? "blur-md" : ""
-      } flex flex-col items-center gap-6 p-6`}
+      } flex flex-col items-center gap-6 p-6 bg-gray-200 dark:bg-[#121212] dark:bg-gradient-to-tr dark:from-[#121212] dark:via-[#121212] dark:to-red-900`}
     >
-      <h1 className="text-3xl font-bold">Parking Map</h1>
+      <h1 className="text-3xl font-bold dark:text-white">Parking Map</h1>
 
-      {/* Seat Grid */}
-      <div className="flex flex-col md:flex-row w-full justify-between items-center sm:gap-10">
-        <div className="flex-grow rounded-lg border-4 p-4">
-          <div className="grid grid-cols-2 sm:grid-cols-10 gap-2 lg:pl-6 xl:pl-12">
+      <div className="flex flex-col md:flex-row w-full justify-between items-center sm:gap-10 ">
+        <div className="flex-grow rounded-lg border-4 p-4 bg-white dark:bg-amber-950">
+          <div className="grid grid-cols-2 sm:grid-cols-10 gap-2 lg:pl-6 xl:pl-6">
             {Array.from({ length: 20 }).map((_, seatIndex) => (
               <button
                 key={seatIndex}
-                className={`sm:w-12 sm:h-32 sm:my-3 lg:py-20 lg:my-8 lg:px-8 xl:px-12 w-32 h-12 rounded-lg text-lg flex items-center justify-center ${
+                className={`sm:w-12 sm:h-32 sm:my-3 lg:py-20 lg:my-8 lg:px-8 xl:px-10 w-32 h-12 rounded-lg text-lg flex items-center justify-center ${
                   isSeatAvailable(seatIndex)
                     ? selectedSeats.includes(seatIndex)
-                      ? "bg-yellow-600 text-white border border-yellow-500 shadow-[inset_0_0_5px_3px_rgba(255,255,0,0.6)]"
-                      : "bg-white text-yellow-600 hover:bg-yellow-600 hover:text-white border border-yellow-500 shadow-[inset_0_0_5px_3px_rgba(255,255,0,0.6)]"
+                      ? "bg-yellow-500 text-white border border-yellow-500 shadow-[inset_0_0_5px_3px_rgba(255,255,0,0.6)]"
+                      : "bg-white text-yellow-500 hover:bg-yellow-500 hover:text-white border border-yellow-500 shadow-[inset_0_0_5px_3px_rgba(255,255,0,0.6)]"
                     : "bg-gray-200 text-white"
                 } 
     `} // Inner shadow gradient effect
@@ -182,7 +181,9 @@ const SeatMap: React.FC = () => {
 
         {/* Payment Section */}
         <div className="flex flex-col items-center gap-4 mt-6 md:mt-0">
-          <p className="text-xl font-semibold">Total Amount: ₹{totalAmount}</p>
+          <p className="text-xl font-semibold dark:text-white">
+            Total Amount: ₹{totalAmount}
+          </p>
 
           <button
             className="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700"

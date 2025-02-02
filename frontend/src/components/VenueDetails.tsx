@@ -125,7 +125,7 @@ const VenueDetails: React.FC = () => {
   if (!venue) return <p className="text-center text-lg">Loading venue...</p>;
 
   return (
-    <div className="flex flex-col w-full p-6">
+    <div className="flex flex-col w-full p-6 bg-gray-200 dark:bg-[#121212] dark:bg-gradient-to-tr dark:from-[#121212] dark:via-[#121212] dark:to-red-900">
       <div className="flex w-full justify-between items-start gap-10">
         {/* Venue Details - Sticks to the Left */}
         <div className="flex flex-col gap-4">
@@ -134,8 +134,10 @@ const VenueDetails: React.FC = () => {
             alt={venue.title}
             className=" grow rounded-t-xl object-cover min-h-[100px] max-h-[200px] sm:max-h-[300px]"
           />
-          <h1 className="text-3xl font-bold">{venue.title}</h1>
-          <p className="text-lg text-gray-600">{venue.genre}</p>
+          <h1 className="text-3xl dark:text-white font-bold">{venue.title}</h1>
+          <p className="text-lg text-gray-600 dark:text-gray-200">
+            {venue.genre}
+          </p>
           <div className="sm:hidden mt-6 text-center">
             <button
               className="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700"
@@ -147,21 +149,21 @@ const VenueDetails: React.FC = () => {
         </div>
 
         {/* Date and Time Selection - Sticks to the Right */}
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-6 dark:text-white">
           <div className="flex flex-col gap-2">
             <label className="text-lg font-semibold">Select Dates:</label>
             <div className="flex flex-wrap gap-2">
               {getUpcomingDates().map((date) => (
                 <button
                   key={date}
-                  className={`p-5 font-medium rounded-lg max-w-14 sm:max-w-20 sm:max-h-20 max-h-14 ${
+                  className={`p-5 dark:text-white font-medium rounded-lg max-w-14 sm:max-w-20 sm:max-h-20 max-h-14 ${
                     selectedDates.includes(date)
                       ? "bg-red-400 text-white"
                       : "text-black hover:text-red-400"
                   } flex flex-col items-center justify-center`}
                   onClick={() => handleDateSelection(date)}
                 >
-                  <span className="text-xs sm:text-sm">
+                  <span className="text-xs  sm:text-sm">
                     {formatDate(date).weekday}
                   </span>
                   <span className="text-base sm:text-lg">
@@ -181,7 +183,7 @@ const VenueDetails: React.FC = () => {
               {Array.from({ length: 24 }).map((_, i) => (
                 <button
                   key={i}
-                  className={`p-1 sm:py-3 relative rounded-lg max-w-14 sm:max-w-20 max-h-14 ${
+                  className={`p-1 dark:text-white sm:py-3 relative rounded-lg max-w-14 sm:max-w-20 max-h-14 ${
                     selectedTimes.includes(i)
                       ? "bg-red-400 text-white"
                       : "text-black hover:text-red-400"

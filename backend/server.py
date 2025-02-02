@@ -365,4 +365,5 @@ def book_seat():
         return jsonify({"error": "Failed to book the seats. They might already be booked."}), 400
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host="0.0.0.0", port=8079)
+

@@ -2,7 +2,8 @@ import { DarkIcon, LightIcon, LoginIcon, LogoutIcon } from "@icons/nav";
 import { useLogin } from "./LoginContext";
 import DarkModeToggle from "@utils/DarkModeToggle";
 import { Link } from "react-router-dom";
-import logosps from "@/assets/logosps.png";
+import logol from "@/assets/logospslight.png";
+import logod from "@/assets/logospsdark.png";
 
 const Navbar = () => {
   const { loggedIn, logout, user } = useLogin();
@@ -19,13 +20,13 @@ const Navbar = () => {
       {/* Logo (Left) */}
       <Link to="/" className="flex items-center gap-2">
         <img
-          className="h-12 w-auto block dark:hidden"
-          src={logosps}
+          className="h-14 -mb-2 -mt-1 w-auto block dark:hidden"
+          src={logol}
           alt="Venues"
         />
         <img
-          className="h-12 w-auto hidden dark:block"
-          src={logosps}
+          className="h-14 -mb-2 -mt-1 w-auto hidden dark:block"
+          src={logod}
           alt="Venues"
         />
       </Link>

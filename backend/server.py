@@ -150,7 +150,17 @@ def verify_user():
         # Return 401 for invalid password
         return jsonify({'error': 'Invalid password'}), 401
     
-    return jsonify({'status': 'success', 'message': 'Logged in successfully'}), 200
+    # Extract the user data from the dictionary
+    user_data = {
+        "name": stored_user['name'],   # Use dictionary key 'name'
+        "email": stored_user['email'], # Use dictionary key 'email'
+        "phone": stored_user['phone'], # Use dictionary key 'phone'
+    }
+    
+    login_data = {'status': 'success', 'message': 'Logged in successfully'}
+    
+    # Return user data and login status as JSON
+    return jsonify({'user_data': user_data, 'login_data': login_data}), 200
 
 # Route: Fetch all venues
 @app.route('/venue', methods=['GET'])

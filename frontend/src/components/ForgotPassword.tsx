@@ -52,13 +52,15 @@ export default function ForgotPassword() {
   };
 
   return (
-    <div className="-mt-10 flex w-full flex-col items-center bg-transparent dark:bg-gradient-to-tr dark:from-transparent dark:via-transparent dark:to-red-900 p-4 sm:p-12">
+    <div className=" flex w-full flex-col items-center bg-gray-200 dark:bg-[#121212] dark:bg-gradient-to-tr dark:from-[#121212] dark:via-[#121212] dark:to-red-900 p-4 sm:p-12">
       <div className="flex gap-8 max-sm:w-full items-center justify-between rounded-lg bg-[#FFFEF9] shadow-xl dark:bg-[#19141459]/35 p-4 sm:p-8">
         <div className="h-[50vh] lg:h-[70vh] max-md:hidden">
           <ForgotIcon />
         </div>
         <div className="flex grow flex-col items-center gap-3 max-sm:text-sm">
-          <p className="text-2xl sm:text-4xl">Forgot password?</p>
+          <p className="text-2xl sm:text-4xl dark:text-[#FAFAFA]">
+            Forgot password?
+          </p>
           <p className="mb-4 text-lg dark:text-[#FAFAFA] sm:text-xl">
             Enter email to receive OTP
           </p>
@@ -66,13 +68,13 @@ export default function ForgotPassword() {
             onSubmit={handleSubmit}
             className="flex w-full flex-col gap-4 text-sm sm:text-lg items-center"
           >
-            <label className="flex flex-col gap-2 rounded-2xl w-full">
+            <label className="flex flex-col gap-2 dark:text-[#FAFAFA] rounded-2xl w-full">
               <span>Email</span>
               <input
                 type="email"
                 id="email"
                 name="email"
-                className="w-full rounded-xl bg-[#ADADAD]/15 py-2 px-4"
+                className="w-full rounded-xl dark:text-gray-300 bg-[#ADADAD]/15 py-2 px-4"
                 placeholder="Enter your email"
                 required
                 value={email}
@@ -88,7 +90,7 @@ export default function ForgotPassword() {
               {isSubmitting ? "Submitting ..." : "Submit"}
             </button>
           </form>
-          <span className="text-center">
+          <span className="text-center dark:text-[#FAFAFA]">
             Remembered the password?
             <Link className="ml-1 text-[#BD0F0F]" to="/login">
               Sign In

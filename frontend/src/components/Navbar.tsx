@@ -6,16 +6,16 @@ import logosps from "@/assets/logosps.png";
 
 const Navbar = () => {
   const { loggedIn, logout, user } = useLogin();
-
-  // Helper function to extract the first name from the full name
+  console.log("User details:", user);
+  // Helper function to extract the first name from the full name or return "aru" if no name is available
   const getDisplayName = (fullName: string | undefined): string => {
-    if (!fullName) return "";
+    if (!fullName) return "aru"; // Return "aru" if no name is found
     const parts = fullName.split(" ");
     return parts[0];
   };
 
   return (
-    <nav className="relative z-20 flex w-full items-center justify-between bg-[#FFFEF9] dark:bg-[#141414] px-4 py-3 md:sticky">
+    <nav className=" z-20 flex w-full items-center justify-between bg-[#FFFEF9] dark:bg-[#141414] px-4 py-3 sticky top-0">
       {/* Logo (Left) */}
       <Link to="/" className="flex items-center gap-2">
         <img
@@ -67,7 +67,7 @@ const Navbar = () => {
         {loggedIn ? (
           <>
             <p className="hidden rounded-md bg-red-600 px-4 py-1.5 font-semibold text-white sm:block">
-              Welcome {getDisplayName(user?.name)}
+              Welcome {getDisplayName(localStorage.getItem("userName") ?? "")}
             </p>
             <div
               className="p-1 rounded-lg text-black dark:text-white hover:bg-gray-200 dark:hover:bg-zinc-800"

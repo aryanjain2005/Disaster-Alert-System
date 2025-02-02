@@ -34,8 +34,17 @@ const Login = () => {
     try {
       const res = await api.post(`/auth/login`, formData);
       if (res && res.status === 200) {
-        localStorage.setItem("userEmail", formData.email);
-        login(res.data);
+        // Save user email and login
+        // Save user email and login
+        localStorage.setItem("userName", res.data.user_data.name);
+        localStorage.setItem("userEmail", res.data.user_data.email);
+        localStorage.setItem("userPhone", res.data.user_data.phone);
+        login(res.data.login_data); // Login with user data (including token)
+        Swal.fire({
+          title: "Success",
+          text: "You are successfully logged in!",
+          icon: "success",
+        });
       } else {
         console.error("Invalid response:", res);
       }
@@ -77,13 +86,13 @@ const Login = () => {
   };
 
   return (
-    <div className="mt-20 min-h-screen flex w-full flex-col items-center bg-transparent dark:bg-gradient-to-tr dark:from-transparent dark:via-transparent dark:to-red-900 p-4 sm:p-12">
+    <div className=" flex w-full flex-col items-center bg-gray-200 dark:bg-[#121212] dark:bg-gradient-to-tr dark:from-[#121212] dark:via-[#121212] dark:to-red-900 p-4 sm:p-12">
       <div className="flex gap-8 max-sm:w-full items-center justify-between rounded-lg bg-[#FFFEF9] shadow-xl dark:bg-[#19141459]/35 p-4 sm:p-8">
         <div className="h-[40vh] lg:h-[60vh] max-md:hidden">
           <LoginIcon />
         </div>
         <div className="flex max-sm:w-full  w-fit  flex-col items-center gap-3 max-sm:text-sm">
-          <p className="text-2xl sm:text-4xl">Welcome Again!</p>
+          <p className="text-2xl sm:text-4xl dark:text-white">Welcome Again!</p>
           <p className="mb-4 text-lg dark:text-[#FAFAFA] sm:text-xl">
             Please Login to continue
           </p>
@@ -91,13 +100,13 @@ const Login = () => {
             onSubmit={handleSubmit}
             className="flex w-full flex-col  gap-4 text-sm sm:text-lg items-center"
           >
-            <label className="flex flex-col dark:text-[#FAFAFA] gap-2 rounded-2xl w-full">
+            <label className="flex flex-col gap-2 rounded-2xl  dark:text-white w-full">
               <span>Email</span>
               <input
                 type="email"
                 id="email"
                 name="email"
-                className="w-full rounded-xl bg-[#ADADAD]/15 dark:bg-[#F60101]/15 py-2 px-4 sm:min-w-[300px]"
+                className="w-full rounded-xl dark:text-gray-300 bg-[#ADADAD]/15 dark:bg-[#F60101]/15 py-2 px-4 sm:min-w-[300px]"
                 placeholder="enter your email"
                 required
                 value={formData.email}
@@ -106,7 +115,7 @@ const Login = () => {
             </label>
             <label className="flex flex-col gap-1.5 rounded-2xl w-full items-end">
               <p className="flex gap-2 w-full">
-                <span className="details dark:text-[#FAFAFA]">Password</span>
+                <span className="details dark:text-white">Password</span>
                 <div
                   className="flex items-center w-8 cursor-pointer bg-transparent dark:bg-[#781111]/85 rounded-xl"
                   onClick={() => setShowPassword((prevState) => !prevState)}
@@ -118,7 +127,7 @@ const Login = () => {
                 type={showPassword ? "text" : "password"}
                 id="password"
                 name="password"
-                className="w-full rounded-xl bg-[#ADADAD]/15 dark:bg-[#F60101]/15 py-2 px-4"
+                className="w-full rounded-xl dark:text-gray-300 bg-[#ADADAD]/15 dark:bg-[#F60101]/15 py-2 px-4"
                 placeholder="Password"
                 required
                 value={formData.password}
@@ -135,7 +144,7 @@ const Login = () => {
               Login
             </button>
           </form>
-          <span className=" text-center dark:text-[#FAFAFA]">
+          <span className=" text-center dark:text-white ">
             Don't have an account?
             <Link className="ml-1 text-[#BD0F0F]" to="/getOTP">
               Signup

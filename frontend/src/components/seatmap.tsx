@@ -1,6 +1,7 @@
 import { api } from "@/utils/api";
 import { useEffect, useState, useRef } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 interface SeatMapData {
   seats: string[][];
@@ -16,12 +17,13 @@ const SeatMap: React.FC = () => {
   );
   const selectedDates: string[] = selectionData.selectedDates || [];
   const selectedTimes: number[] = selectionData.selectedTimes || [];
-
+  const navigate = useNavigate();
   const [seatMap, setSeatMap] = useState<SeatMapData[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedSeats, setSelectedSeats] = useState<number[]>([]);
   const [openRazorpay, setOpenRazorpay] = useState(false);
   const [userEmail, setUserEmail] = useState<string>("");
+  const [isBlurring, setIsBlurring] = useState(false);
 
   // Fetch seatmap data
   useEffect(() => {
@@ -66,18 +68,26 @@ const SeatMap: React.FC = () => {
   };
 
   const handlePaymentSuccess = () => {
-    const bookingData = {
-      venueId: venueId,
-      selectedDates: selectedDates,
-      selectedTimes: selectedTimes,
-      selectedSeats: selectedSeats,
-      email: localStorage.getItem("userEmail"),
-    };
-    console.log(bookingData);
+    setIsBlurring(true); // Apply blur
+
+    Swal.fire({
+      title: "Booking Confirmed!",
+      text: `Your parking slot is successfully booked. You will receive OTPs on your registered email: ${userEmail}`,
+      icon: "success",
+      confirmButtonText: "OK",
+      backdrop: "rgba(0,0,0,0.4)", // Dark overlay
+    }).then(() => {
+      setIsBlurring(false); // Remove blur when the user clicks OK
+      navigate("/home"); // Redirect after closing alert
+    });
+
     api
-      .post("/book_seat", bookingData)
-      .then((response) => {
-        console.log("Seats booked successfully:", response.data);
+      .post("/book_seat", {
+        venueId,
+        selectedDates,
+        selectedTimes,
+        selectedSeats,
+        email: userEmail,
       })
       .catch((error) => {
         console.error("Error booking seats:", error);
@@ -90,32 +100,47 @@ const SeatMap: React.FC = () => {
     selectedDates.length * selectedTimes.length * selectedSeats.length * 100;
 
   useEffect(() => {
-    if (openRazorpay && totalAmount > 0) {
-      const options = {
-        key: "rzp_test_raxyaoALaCjvBM",
-        amount: totalAmount * 100,
-        currency: "INR",
-        name: "Chalchitra",
-        description: "for testing purpose",
-        prefill: {
-          name: "Aryan",
-        },
-        notes: {
-          address: "Razorpay Corporate office",
-        },
-        theme: {
-          color: "#3399cc",
-        },
-        handler: function (response: any) {
-          console.log("Payment Successful!", response);
-          handlePaymentSuccess();
-        },
-      };
+    if (!openRazorpay || totalAmount <= 0) return;
 
-      const pay = new window.Razorpay(options);
-      pay.open();
-      setOpenRazorpay(false);
-    }
+    setIsBlurring(true); // Apply blur before payment opens
+
+    const options = {
+      key: "rzp_test_raxyaoALaCjvBM",
+      amount: totalAmount * 100,
+      currency: "INR",
+      name: "Smart Parking System",
+      description: "For testing purposes",
+      prefill: { name: localStorage.getItem("userName") },
+      notes: { address: "IIT Mandi" },
+      theme: { color: "#3399cc" },
+      handler: function (response: any) {
+        console.log("Payment Successful!", response);
+        setIsBlurring(false); // Remove blur after payment success
+        handlePaymentSuccess();
+      },
+      modal: {
+        escape: false,
+        ondismiss: function () {
+          setIsBlurring(false);
+          navigate("/home"); // Redirect to home page if payment is dismissed
+          // window.history.go(-2);
+          // console.log("Payment dismissed!");
+          // console.log("Current history state:", window.history.state);
+          // console.log("Current history length:", window.history.length);
+
+          // // Remove extra history entries
+          // if (window.history.length > 2) {
+          //   window.history.go(-2);
+          // } else {
+          //   navigate(`/seatmap?venueId=${venueId}`, { replace: true });
+          // }
+        },
+      },
+    };
+
+    const pay = new window.Razorpay(options);
+    pay.open();
+    setOpenRazorpay(false);
   }, [totalAmount, openRazorpay, userEmail]);
 
   if (loading)
@@ -124,23 +149,28 @@ const SeatMap: React.FC = () => {
     return <p className="text-center text-lg">No seat data available.</p>;
 
   return (
-    <div className="flex flex-col items-center gap-6 p-6">
+    <div
+      className={`${
+        isBlurring ? "blur-md" : ""
+      } flex flex-col items-center gap-6 p-6`}
+    >
       <h1 className="text-3xl font-bold">Parking Map</h1>
 
       {/* Seat Grid */}
       <div className="flex flex-col md:flex-row w-full justify-between items-center sm:gap-10">
         <div className="flex-grow rounded-lg border-4 p-4">
-          <div className="grid grid-cols-2 sm:grid-cols-10 gap-2 lg:pl-6 2xl:pl-12">
+          <div className="grid grid-cols-2 sm:grid-cols-10 gap-2 lg:pl-6 xl:pl-12">
             {Array.from({ length: 20 }).map((_, seatIndex) => (
               <button
                 key={seatIndex}
-                className={`sm:w-12 sm:h-32 sm:my-3 w-32 h-12 rounded-lg border text-lg flex items-center justify-center ${
+                className={`sm:w-12 sm:h-32 sm:my-3 lg:py-20 lg:my-8 lg:px-8 xl:px-12 w-32 h-12 rounded-lg text-lg flex items-center justify-center ${
                   isSeatAvailable(seatIndex)
                     ? selectedSeats.includes(seatIndex)
-                      ? "bg-green-100 text-black"
-                      : "bg-white border-black text-green-600"
-                    : "bg-gray-400"
-                }`}
+                      ? "bg-yellow-600 text-white border border-yellow-500 shadow-[inset_0_0_5px_3px_rgba(255,255,0,0.6)]"
+                      : "bg-white text-yellow-600 hover:bg-yellow-600 hover:text-white border border-yellow-500 shadow-[inset_0_0_5px_3px_rgba(255,255,0,0.6)]"
+                    : "bg-gray-200 text-white"
+                } 
+    `} // Inner shadow gradient effect
                 disabled={!isSeatAvailable(seatIndex)}
                 onClick={() => handleSeatSelection(seatIndex)}
               >

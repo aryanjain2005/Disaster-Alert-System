@@ -76,18 +76,18 @@ const Signup = () => {
     }
   }, [user]);
   return (
-    <div className="-mt-10 flex w-full flex-col items-center bg-transparent dark:bg-gradient-to-tr dark:from-transparent dark:via-transparent dark:to-red-900 p-4 sm:p-12">
+    <div className="flex w-full flex-col items-center bg-gray-200 dark:bg-[#121212] dark:bg-gradient-to-tr dark:from-[#121212] dark:via-[#121212] dark:to-red-900 p-4 sm:p-12">
       <div className="flex gap-8 max-sm:w-full items-center justify-between rounded-lg bg-[#FFFEF9] shadow-xl dark:bg-[#19141459]/35 p-4 sm:p-8">
         <div className="h-[50vh] lg:h-[70vh] max-md:hidden">
           <SignupIcon />
         </div>
         <div className="flex grow flex-col items-center gap-3 max-sm:text-sm">
-          <p className="text-2xl sm:text-4xl">Sign up</p>
+          <p className="text-2xl sm:text-4xl dark:text-white">Sign up</p>
           <form
             onSubmit={handleSubmit}
             className="flex w-full flex-col gap-4 text-sm sm:text-lg items-center"
           >
-            <label className="flex flex-col gap-2 rounded-2xl w-full">
+            <label className="dark:text-white flex flex-col gap-2 rounded-2xl w-full">
               <span>Name</span>
               <input
                 type="text"
@@ -97,15 +97,15 @@ const Signup = () => {
                 value={formData.name}
                 onChange={handleChange}
                 disabled={isSubmitting}
-                className="w-full rounded-xl bg-[#ADADAD]/15 py-2 px-4 sm:min-w-[300px]"
+                className="w-full rounded-xl dark:text-gray-300 bg-[#ADADAD]/15 py-2 px-4 sm:min-w-[300px]"
               />
             </label>
-            <label className="flex flex-col gap-2 rounded-2xl w-full">
+            <label className="flex flex-col gap-2 rounded-2xl dark:text-white w-full">
               <span>Email</span>
               <input
                 type="email"
                 name="email"
-                className="w-full rounded-xl bg-[#ADADAD]/15 py-2 px-4 sm:min-w-[300px]"
+                className="w-full rounded-xl dark:text-gray-300 bg-[#ADADAD]/15 py-2 px-4 sm:min-w-[300px]"
                 placeholder="Enter your email"
                 required
                 value={formData.email}
@@ -113,10 +113,10 @@ const Signup = () => {
                 disabled={isSubmitting}
               />
             </label>
-            <label className="flex flex-col gap-2 rounded-2xl w-full">
+            <label className="flex flex-col gap-2 dark:text-white rounded-2xl w-full">
               <span>Phone no</span>
               <input
-                className="w-full rounded-xl bg-[#ADADAD]/15 py-2 px-4 sm:min-w-[300px]"
+                className="w-full rounded-xl dark:text-gray-300 bg-[#ADADAD]/15 py-2 px-4 sm:min-w-[300px]"
                 type="text"
                 name="phone"
                 placeholder="Enter your phone number"
@@ -124,7 +124,7 @@ const Signup = () => {
                 onChange={handleChange}
               />
             </label>
-            <label className="flex flex-col gap-2 rounded-2xl w-full">
+            <label className="flex flex-col gap-2 rounded-2xl dark:text-white w-full">
               <span>OTP</span>
               <input
                 name="otp"
@@ -132,10 +132,10 @@ const Signup = () => {
                 value={formData.otp}
                 placeholder="OTP"
                 onChange={handleChange}
-                className="w-full rounded-xl bg-[#ADADAD]/15 py-2 px-4"
+                className="w-full rounded-xl dark:text-gray-300 bg-[#ADADAD]/15 py-2 px-4"
               />
             </label>
-            <label className="flex flex-col gap-1 rounded-2xl w-full items-end">
+            <label className="flex flex-col gap-1 rounded-2xl w-full dark:text-white items-end">
               <p className="flex gap-2 w-full">
                 <span className="details">Password</span>
                 <div
@@ -148,7 +148,7 @@ const Signup = () => {
               <input
                 type={showPassword ? "text" : "password"}
                 name="password"
-                className="w-full rounded-xl bg-[#ADADAD]/15 py-2 px-4"
+                className="w-full rounded-xl dark:text-gray-300 bg-[#ADADAD]/15 py-2 px-4"
                 placeholder="Password"
                 required
                 value={formData.password}
@@ -163,7 +163,7 @@ const Signup = () => {
               {isSubmitting ? "Signing up..." : "Signup"}
             </button>
           </form>
-          <span className="text-center">
+          <span className="text-center dark:text-white">
             Already have an account?
             <Link className="ml-1 text-[#BD0F0F]" to="/login">
               Sign In

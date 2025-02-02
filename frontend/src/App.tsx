@@ -12,6 +12,7 @@ import SeatMap from "./components/seatmap";
 import { LoginProvider } from "@/components/LoginContext";
 import { NextUIProvider } from "@nextui-org/react";
 import ProtectedRoute from "@components/ProtectedRoute";
+import Footer from "./components/Footer";
 function App() {
   useEffect(() => {
     const storedTheme = localStorage.getItem("theme") || "light";
@@ -42,7 +43,8 @@ function App() {
             </Route>
             <Route path="*" element={<Navigate to="/home" />} />
           </Routes>
-        </LoginProvider>{" "}
+          <Footer />
+        </LoginProvider>
       </NextUIProvider>
     </BrowserRouter>
   );

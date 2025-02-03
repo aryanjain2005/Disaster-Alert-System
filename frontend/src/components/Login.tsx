@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useLogin } from "../components/LoginContext";
-import { HideEye, LoginIcon, ShowEye } from "../icons/Auth";
+import { HideEye, ShowEye } from "../icons/Auth";
 import { api } from "../utils/api";
-
+import LoginIconLight from "../icons/Login_light.svg";
+import LoginIconRed from "../icons/Login_red.svg";
 const Login = () => {
   const { login, user } = useLogin();
   const location = useLocation();
@@ -86,7 +87,16 @@ const Login = () => {
     <div className="flex w-full flex-col items-center bg-gray-200 dark:bg-[#0D1117] dark:bg-gradient-to-tr dark:from-[#0D1117] dark:via-[#0D1117] dark:to-red-900 p-4 sm:p-12">
       <div className="flex gap-8 max-sm:w-full items-center justify-between rounded-lg bg-[#FFFEF9] shadow-xl dark:bg-[#161B22] dark:bg-opacity-80 p-4 sm:p-8">
         <div className="h-[40vh] lg:h-[60vh] max-md:hidden">
-          <LoginIcon />
+          <img
+            src={LoginIconLight}
+            alt="Login"
+            className="h-full w-auto object-contain block dark:hidden"
+          />
+          <img
+            src={LoginIconRed}
+            alt="Login"
+            className="h-full w-auto object-contain hidden dark:block"
+          />
         </div>
         <div className="flex max-sm:w-full  w-fit  flex-col items-center gap-3 max-sm:text-sm">
           <p className="text-2xl sm:text-4xl font-funnel-display dark:text-white">

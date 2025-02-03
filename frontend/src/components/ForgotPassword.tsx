@@ -9,7 +9,7 @@ export default function ForgotPassword() {
   const [formData, setFormData] = useState<{ email: string }>({ email: "" });
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const { email } = formData;
-  const { login, user } = useLogin();
+  const { user } = useLogin();
   const location = useLocation();
   const navigate = useNavigate();
   const from = location.state?.from ?? { pathname: "/home", search: "" };
@@ -52,24 +52,24 @@ export default function ForgotPassword() {
   };
 
   return (
-    <div className=" flex w-full flex-col items-center bg-gray-200 dark:bg-[#121212] dark:bg-gradient-to-tr dark:from-[#121212] dark:via-[#121212] dark:to-red-900 p-4 sm:p-12">
-      <div className="flex gap-8 max-sm:w-full items-center justify-between rounded-lg bg-[#FFFEF9] shadow-xl dark:bg-[#19141459]/35 p-4 sm:p-8">
+    <div className=" flex w-full flex-col items-center bg-gray-200 dark:bg-[#0D1117] dark:bg-gradient-to-tr dark:from-[#0D1117] dark:via-[#0D1117] dark:to-red-900 p-4 sm:p-12">
+      <div className="flex gap-8 max-sm:w-full items-center justify-between rounded-lg bg-[#FFFEF9] shadow-xl dark:bg-[#161B22] dark:bg-opacity-80 p-4 sm:p-8">
         <div className="h-[50vh] lg:h-[70vh] max-md:hidden">
           <ForgotIcon />
         </div>
         <div className="flex grow flex-col items-center gap-3 max-sm:text-sm">
-          <p className="text-2xl sm:text-4xl dark:text-[#FAFAFA]">
+          <p className="text-2xl sm:text-4xl font-funnel-display dark:text-[#FAFAFA]">
             Forgot password?
           </p>
-          <p className="mb-4 text-lg dark:text-[#FAFAFA] sm:text-xl">
+          <p className="mb-4 text-lg font-funnel-display dark:text-[#FAFAFA] sm:text-xl">
             Enter email to receive OTP
           </p>
           <form
             onSubmit={handleSubmit}
             className="flex w-full flex-col gap-4 text-sm sm:text-lg items-center"
           >
-            <label className="flex flex-col gap-2 dark:text-[#FAFAFA] rounded-2xl w-full">
-              <span>Email</span>
+            <label className="flex flex-col gap-2 dark:text-[#FAFAFA] font-domine rounded-2xl w-full">
+              <span className="font-merriweather">Email</span>
               <input
                 type="email"
                 id="email"
@@ -83,16 +83,16 @@ export default function ForgotPassword() {
               />
             </label>
             <button
-              className="bg-gradient-to-r text-white from-[#B01010] to-[#CB2727] dark:to-[#4A0707] rounded-xl w-fi py-2 px-6 sm:px-8 sm:py-3"
+              className="bg-gradient-to-r font-audiowide text-white from-[#B01010] to-[#CB2727] dark:to-[#4A0707] rounded-xl w-fi py-2 px-6 sm:px-8 sm:py-3"
               type="submit"
               disabled={isSubmitting}
             >
               {isSubmitting ? "Submitting ..." : "Submit"}
             </button>
           </form>
-          <span className="text-center dark:text-[#FAFAFA]">
+          <span className="text-center font-domine dark:text-[#FAFAFA]">
             Remembered the password?
-            <Link className="ml-1 text-[#BD0F0F]" to="/login">
+            <Link className="ml-1 cursor-pointer text-[#BD0F0F]" to="/login">
               Sign In
             </Link>
           </span>

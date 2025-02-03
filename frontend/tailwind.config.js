@@ -12,6 +12,12 @@ export default {
       fontFamily: {
         monts: ["Montserrat", "sans-serif"],
         bn: ["Bebas Neue", "Montserrat", "sans-serif"],
+        inter: ["Inter", "sans-serif"],
+        poppins: ["Poppins", "sans-serif"],
+        rajdhani: ["Rajdhani", "sans-serif"],
+        orbitron: ["Orbitron", "sans-serif"],
+        firaCode: ["Fira Code", "monospace"],
+        jetBrains: ["JetBrains Mono", "monospace"],
       },
     },
   },

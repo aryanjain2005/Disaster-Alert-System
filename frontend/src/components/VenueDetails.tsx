@@ -9,7 +9,6 @@ interface Venue {
   genre: string;
   free: boolean;
 }
-
 const VenueDetails: React.FC = () => {
   const [searchParams] = useSearchParams();
   const venueId = searchParams.get("venueId");
@@ -24,7 +23,7 @@ const VenueDetails: React.FC = () => {
     if (!venueId) return;
 
     api
-      .get<Venue>(`/venuebyID`, { params: { venueId } })
+      .get<Venue>("/venuebyID", { params: { venueId } })
       .then((response) => setVenue(response.data))
       .catch((error) => console.error("Error fetching venue:", error));
   }, [venueId]);
@@ -39,34 +38,13 @@ const VenueDetails: React.FC = () => {
     return dates;
   };
 
-  // Function to format date as "6th Feb, 2025"
   const formatDate = (dateStr: string) => {
     const date = new Date(dateStr);
     const day = date.getDate();
     const month = date.toLocaleString("en-GB", { month: "short" });
-    const year = date.getFullYear();
-
-    // Function to get the ordinal suffix (st, nd, rd, th)
-    const getOrdinalSuffix = (day: number): string => {
-      if (day >= 11 && day <= 13) {
-        return "th"; // Special case for 11th, 12th, 13th
-      }
-      switch (day % 10) {
-        case 1:
-          return "st";
-        case 2:
-          return "nd";
-        case 3:
-          return "rd";
-        default:
-          return "th";
-      }
-    };
-
     const ordinalDay = day;
     const weekday = date.toLocaleString("en-GB", { weekday: "short" });
 
-    // Return an object with weekday, ordinalDay, and month
     return {
       weekday,
       ordinalDay,
@@ -89,9 +67,7 @@ const VenueDetails: React.FC = () => {
     return { numeric, ampm };
   };
 
-  // Handle multiple date selections
   const handleDateSelection = (date: string) => {
-    console.log(selectedDates);
     setSelectedDates((prev) =>
       prev.includes(date) ? prev.filter((d) => d !== date) : [...prev, date]
     );
@@ -115,43 +91,56 @@ const VenueDetails: React.FC = () => {
       selectedTimes,
     };
 
-    // Store in localStorage
     localStorage.setItem("venueSelection", JSON.stringify(selectionData));
-
-    // Navigate to SeatMap page
     navigate(`/seatmap?venueId=${venueId}`);
   };
+
+  // Disable button when no date or time is selected
+  const isSubmitDisabled =
+    selectedDates.length === 0 || selectedTimes.length === 0;
 
   if (!venue) return <p className="text-center text-lg">Loading venue...</p>;
 
   return (
-    <div className="flex flex-col w-full p-6 bg-gray-200 dark:bg-[#121212] dark:bg-gradient-to-tr dark:from-[#121212] dark:via-[#121212] dark:to-red-900">
+    <div className="flex flex-col w-full p-6 bg-gray-200 dark:bg-[#0D1117] dark:bg-gradient-to-tr dark:from-[#0D1117] dark:via-[#0D1117] dark:to-red-900">
       <div className="flex w-full justify-between items-start gap-10">
-        {/* Venue Details - Sticks to the Left */}
-        <div className="flex flex-col gap-4">
+        {/* Venue Details */}
+        <div className="flex flex-col gap-4 lg:ml-5">
           <img
             src={venue.poster}
             alt={venue.title}
-            className=" grow rounded-t-xl object-cover min-h-[100px] max-h-[200px] sm:max-h-[300px]"
+            className="grow rounded-xl object-cover min-h-[100px] max-h-[200px] sm:max-h-[300px] md:max-h-[360px] w-full bg-white border-4 border-red-700 dark:bg-[#0C0C0C] shadow-2xl dark:shadow-white/40"
           />
-          <h1 className="text-3xl dark:text-white font-bold">{venue.title}</h1>
-          <p className="text-lg text-gray-600 dark:text-gray-200">
+          <h1 className="text-3xl font-koh text-center dark:text-white font-bold">
+            {venue.title}
+          </h1>
+          <p className="text-lg -mt-3 font-audiowide text-center text-gray-600 dark:text-gray-200">
             {venue.genre}
           </p>
+
+          {/* Submit Button (small screens) */}
           <div className="sm:hidden mt-6 text-center">
             <button
-              className="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700"
+              className={`w-24 h-12 rounded-full shadow-white/50 font-audiowide cursor-pointer focus:outline-none ${
+                isSubmitDisabled
+                  ? "bg-gray-400 text-gray-200 cursor-not-allowed"
+                  : "bg-red-700 text-white hover:shadow-lg"
+              }`}
               onClick={handleSubmit}
+              disabled={isSubmitDisabled}
             >
               Submit
             </button>
           </div>
         </div>
 
-        {/* Date and Time Selection - Sticks to the Right */}
+        {/* Date and Time Selection */}
         <div className="flex flex-col gap-6 dark:text-white">
+          {/* Date selection */}
           <div className="flex flex-col gap-2">
-            <label className="text-lg font-semibold">Select Dates:</label>
+            <label className="text-lg font-kanit font-semibold">
+              Select Dates:
+            </label>
             <div className="flex flex-wrap gap-2">
               {getUpcomingDates().map((date) => (
                 <button
@@ -163,13 +152,13 @@ const VenueDetails: React.FC = () => {
                   } flex flex-col items-center justify-center`}
                   onClick={() => handleDateSelection(date)}
                 >
-                  <span className="text-xs  sm:text-sm">
+                  <span className="text-xs font-aldrich sm:text-sm">
                     {formatDate(date).weekday}
                   </span>
                   <span className="text-base sm:text-lg">
                     {formatDate(date).ordinalDay}
                   </span>
-                  <span className="text-xs sm:text-sm">
+                  <span className="text-xs font-aldrich sm:text-sm">
                     {formatDate(date).month}
                   </span>
                 </button>
@@ -177,8 +166,11 @@ const VenueDetails: React.FC = () => {
             </div>
           </div>
 
+          {/* Time selection */}
           <div className="flex flex-col gap-2">
-            <label className="text-lg font-semibold">Select Time Slots:</label>
+            <label className="text-lg font-semibold font-kanit">
+              Select Time Slots:
+            </label>
             <div className="grid grid-cols-4 sm:grid-cols-6 lg:grid-cols-8 xl:grid-cols-12 gap-2">
               {Array.from({ length: 24 }).map((_, i) => (
                 <button
@@ -194,18 +186,25 @@ const VenueDetails: React.FC = () => {
                     <span className="text-lg font-semibold">
                       {formatTime(i).numeric}
                     </span>
-                    <span className="text-xs">{formatTime(i).ampm}</span>
+                    <span className="text-xs font-aldrich">
+                      {formatTime(i).ampm}
+                    </span>
                   </div>
                 </button>
               ))}
             </div>
           </div>
 
-          {/* Submit Button */}
+          {/* Submit Button (large screens) */}
           <div className="hidden sm:block mt-6 text-center">
             <button
-              className="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700"
+              className={`w-24 h-12 rounded-full shadow-white/50 font-audiowide focus:outline-none ${
+                isSubmitDisabled
+                  ? "bg-gray-400 text-gray-200 cursor-not-allowed"
+                  : "bg-red-700 text-white hover:shadow-lg cursor-pointer"
+              }`}
               onClick={handleSubmit}
+              disabled={isSubmitDisabled}
             >
               Submit
             </button>

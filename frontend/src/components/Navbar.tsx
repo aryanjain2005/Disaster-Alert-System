@@ -1,6 +1,5 @@
-import { DarkIcon, LightIcon, LoginIcon, LogoutIcon } from "../icons/nav";
+import { DarkIcon, LightIcon, LoginIcon, LogoutIcon } from "../icons/Nav.js";
 import { useLogin } from "./LoginContext";
-import DarkModeToggle from "../utils/DarkModeToggle";
 import { Link } from "react-router-dom";
 import logol from "../assets/logospslight.png";
 import logod from "../assets/logospsdark.png";
@@ -33,7 +32,7 @@ const Navbar = () => {
 
       {/* Centered Title */}
       <p
-        className="absolute left-1/2 transform -translate-x-1/2 font-bn font-bold text-red-600 
+        className="absolute font-montserrat-alternates left-1/2 transform -translate-x-1/2 font-bn font-bold text-red-600 dark:text-[#FAFAFA] 
                text-lg sm:text-xl md:text-2xl lg:text-3xl"
       >
         Smart Parking System
@@ -67,7 +66,7 @@ const Navbar = () => {
         {/* Login/Logout */}
         {loggedIn ? (
           <>
-            <p className="hidden rounded-md bg-red-600 px-4 py-1.5 font-semibold text-white sm:block">
+            <p className="hidden font-gugi rounded-md bg-red-600 px-4 py-1.5 font-semibold text-white sm:block">
               Welcome {getDisplayName(localStorage.getItem("userName") ?? "")}
             </p>
             <div

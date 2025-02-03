@@ -41,17 +41,51 @@ def generate_otp():
     return str(random.randint(100000, 999999))
 
 # Helper: Send OTP Email
+# Helper: Send OTP Email
 def send_otp_email(email, otp):
-    msg = Message('Your OTP Code', sender=app.config['MAIL_USERNAME'], recipients=[email])
-    msg.body = f'Your OTP code is: {otp}. It expires in 10 minutes.'
+    # Extract the name (Assume the name is the part before the "@" symbol in the email)
+    name = email.split('@')[0].replace('.', ' ').title()
+
+    msg = Message('Smart Parking Sign-In Verification', sender=app.config['MAIL_USERNAME'], recipients=[email])
+    msg.body = f"""
+Dear {name},
+
+We have received a sign-in attempt from this email address.
+
+To complete the sign-in process, please enter the following 6-digit code in the OTP window:
+
+OTP: {otp}
+
+This code will expire in 10 minutes. If you did not request this sign-in, please ignore this email.
+
+Best regards,
+The Smart Parking Team
+"""
     mail.send(msg)
 
-def send_email_forgot(to_email, otp):
-    msg = Message('Your OTP Code', sender=app.config['MAIL_USERNAME'], recipients=[to_email])
-    msg.body = f'Your OTP code for changing the password is: {otp}. It expires in 10 minutes.'
+
+# Helper: Send OTP Email for Forgot Password
+def send_email_forgot(to_email, otp, name):
+
+    msg = Message('Your OTP Code for Password Reset', sender=app.config['MAIL_USERNAME'], recipients=[to_email])
+    msg.body = f"""
+Dear {name},
+
+We received a request to change the password associated with your account.
+
+To proceed with the password reset, please enter the following OTP code:
+
+OTP: {otp}
+
+This code will expire in 10 minutes. If you did not request a password reset, please ignore this email.
+
+Best regards,
+The Smart Parking Team
+"""
     mail.send(msg)
+
 # Send OTP email for booking confirmation
-def send_booking_confirmation(email, selected_dates, selected_times, selected_seats, venue_name):
+def send_booking_confirmation(email, selected_dates, selected_times, selected_seats, venue_name, name):
     otp1 = generate_otp()
     otp2 = generate_otp()
 
@@ -63,20 +97,32 @@ def send_booking_confirmation(email, selected_dates, selected_times, selected_se
     )
 
     # Send OTP confirmation email
-    msg = Message('Booking Confirmation & OTPs', sender=app.config['MAIL_USERNAME'], recipients=[email])
+    msg = Message('Booking Confirmation for ' + venue_name, sender=app.config['MAIL_USERNAME'], recipients=[email])
     msg.body = f"""
-    Your booking for {venue_name} is confirmed. 
+Dear {name},
 
-    Dates: {', '.join(selected_dates)}
-    Times: {', '.join(map(str, selected_times))}
-    Seats: {', '.join(map(str, selected_seats))}
+Your booking at {venue_name} is confirmed! Thank you for choosing us.
 
-    OTP 1: {otp1}
-    OTP 2: {otp2}
+Here are the details of your booking:
 
-    The OTPs will never expire and can be used for any future access to the system.
-    """
+Dates: {', '.join(selected_dates)}
+Times: {', '.join(map(str, selected_times))}
+Seats: {', '.join(map(str, selected_seats))}
+
+We have generated two OTPs for you:
+
+- OTP 1: {otp1}
+- OTP 2: {otp2}
+
+These OTPs will never expire and can be used for future access to the system. Please keep them safe.
+
+If you have any questions or need further assistance, feel free to reach out.
+
+Best regards,
+The Smart Parking Team
+"""
     mail.send(msg)
+
 # Route: Send OTP
 @app.route('/auth/send-otp', methods=['POST'])
 def send_otp():
@@ -217,7 +263,7 @@ def forgot_password():
     )
 
     # Send OTP email
-    send_email_forgot(email, otp)
+    send_email_forgot(email, otp, user["name"])
     return jsonify({'message': 'OTP sent successfully'}), 200
 
 @app.route('/auth/update', methods=['POST'])
@@ -358,7 +404,8 @@ def book_seat():
             {"_id": ObjectId(venue_id)},
             {"$set": {"seatmap": updated_seatmap}}
         )
-        send_booking_confirmation(email, selected_dates, selected_times, selected_seats, venue["title"])
+        user = users_collection.find_one({"email": email})
+        send_booking_confirmation(email, selected_dates, selected_times, selected_seats, venue["title"], user["name"])
 
         return jsonify({"message": "Seats booked successfully!"}), 200
     else:

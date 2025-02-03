@@ -8,12 +8,12 @@ export default function Footer() {
   const openModal = () => setIsModalOpen(true);
 
   return (
-    <div className="relative z-10 flex justify-center bg-[#FFFEF9] dark:bg-[#141414] p-4 font-monts">
+    <div className="relative z-10 flex justify-center bg-[#FFFEF9] dark:bg-black p-4 font-monts">
       <div className="w-4/5 max-sm:w-[90%]">
-        <p className="flex items-center gap-1 border-b-2 py-4 font-bn text-3xl font-bold text-[#FB2A25] sm:text-4xl">
+        <p className="flex font-funnel-display items-center gap-1 border-b-2 py-4 font-bn text-3xl font-bold text-red-600 dark:text-[#FAFAFA] sm:text-4xl">
           SMART PARKING
         </p>
-        <div className="mb-12 grid gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
+        <div className="mb-12 font-montserrat-alternates grid gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
           <div className="my-4 flex flex-col gap-1 dark:text-white">
             <span className="mb-2 text-lg font-semibold capitalize sm:text-2xl">
               contact us

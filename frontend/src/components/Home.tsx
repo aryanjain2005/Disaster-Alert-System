@@ -44,10 +44,12 @@ const GrpCard: React.FC<GrpCardProps> = ({
   return (
     <div id={type} className="flex w-4/5 flex-col gap-2 ">
       <div className="flex items-center justify-between w-full gap-2">
-        <p className="font-bn font-semibold text-3xl text-[#E40C2B]">{type}</p>
+        <p className="font-bn font-audiowide font-semibold text-3xl text-[#E40C2B]">
+          {type}
+        </p>
         {venues.length > limit && (
           <p
-            className="w-fit font-inter cursor-pointer text-center text-sm hover:bg-white dark:hover:bg-zinc-800 dark:text-white p-2 rounded-xl"
+            className="w-fit font-bebas-neue cursor-pointer text-center text-lg hover:bg-white dark:hover:bg-zinc-800 dark:text-white pt-2 px-2 rounded-xl"
             onClick={() => {
               setShowMore(!showMore);
               showMore && scrollToElement(type, 120);

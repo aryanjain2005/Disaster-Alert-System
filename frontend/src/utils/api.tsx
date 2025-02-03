@@ -1,9 +1,10 @@
 import axios from "axios";
 
-const baseUrl = "/api/proxy";
+const baseUrl = "http://127.0.0.1:8079";
 //http://127.0.0.1:8079
 //http://14.139.34.101:8079
 //"http://10.8.1.10:8079"
+//"/api/proxy"
 export const api = axios.create({
   baseURL: baseUrl,
   withCredentials: false,

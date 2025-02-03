@@ -6,7 +6,11 @@ import Swal from "sweetalert2";
 interface SeatMapData {
   seats: string[][];
 }
-
+declare global {
+  interface Window {
+    Razorpay: any;
+  }
+}
 const SeatMap: React.FC = () => {
   const [searchParams] = useSearchParams();
   const venueId = searchParams.get("venueId");
@@ -51,7 +55,7 @@ const SeatMap: React.FC = () => {
   }, []);
 
   const isSeatAvailable = (seatIndex: number) => {
-    return selectedDates.every((date, dateIdx) =>
+    return selectedDates.every((_, dateIdx) =>
       selectedTimes.every(
         (timeSlot) =>
           seatMap[dateIdx]?.seats?.[timeSlot]?.[seatIndex] === "free"
@@ -152,12 +156,14 @@ const SeatMap: React.FC = () => {
     <div
       className={`${
         isBlurring ? "blur-md" : ""
-      } flex flex-col items-center gap-6 p-6 bg-gray-200 dark:bg-[#121212] dark:bg-gradient-to-tr dark:from-[#121212] dark:via-[#121212] dark:to-red-900`}
+      } flex flex-col items-center gap-6 p-6 bg-gray-200 dark:bg-[#0D1117] dark:bg-gradient-to-tr dark:from-[#0D1117] dark:via-[#0D1117] dark:to-red-900`}
     >
-      <h1 className="text-3xl font-bold dark:text-white">Parking Map</h1>
+      <h1 className="text-3xl font-bold font-aldrich dark:text-white">
+        Parking Map
+      </h1>
 
       <div className="flex flex-col md:flex-row w-full justify-between items-center sm:gap-10 ">
-        <div className="flex-grow rounded-lg border-4 p-4 bg-white dark:bg-amber-950">
+        <div className="flex-grow rounded-lg border-4 p-4 bg-white dark:bg-[#141414]">
           <div className="grid grid-cols-2 sm:grid-cols-10 gap-2 lg:pl-6 xl:pl-6">
             {Array.from({ length: 20 }).map((_, seatIndex) => (
               <button
@@ -165,9 +171,9 @@ const SeatMap: React.FC = () => {
                 className={`sm:w-12 sm:h-32 sm:my-3 lg:py-20 lg:my-8 lg:px-8 xl:px-10 w-32 h-12 rounded-lg text-lg flex items-center justify-center ${
                   isSeatAvailable(seatIndex)
                     ? selectedSeats.includes(seatIndex)
-                      ? "bg-yellow-500 text-white border border-yellow-500 shadow-[inset_0_0_5px_3px_rgba(255,255,0,0.6)]"
-                      : "bg-white text-yellow-500 hover:bg-yellow-500 hover:text-white border border-yellow-500 shadow-[inset_0_0_5px_3px_rgba(255,255,0,0.6)]"
-                    : "bg-gray-200 text-white"
+                      ? "bg-red-400 text-white border font-bold border-red-400 shadow-[inset_0_0_5px_3px_rgba(255,0,0,0.6)]"
+                      : "bg-white text-black-400 font-bold hover:bg-red-400 hover:text-white border border-red-400 shadow-[inset_0_0_5px_3px_rgba(255,0,0,0.6)]"
+                    : "bg-gray-300 dark:bg-gray-400 cursor-not-allowed text-black font-bold"
                 } 
     `} // Inner shadow gradient effect
                 disabled={!isSeatAvailable(seatIndex)}
@@ -181,12 +187,16 @@ const SeatMap: React.FC = () => {
 
         {/* Payment Section */}
         <div className="flex flex-col items-center gap-4 mt-6 md:mt-0">
-          <p className="text-xl font-semibold dark:text-white">
+          <p className="text-xl font-semibold font-domine dark:text-white">
             Total Amount: ₹{totalAmount}
           </p>
 
           <button
-            className="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700"
+            className={`w-24 h-12 rounded-full shadow-white/50 font-audiowide focus:outline-none ${
+              totalAmount === 0
+                ? "bg-gray-400 text-gray-200 cursor-not-allowed"
+                : "bg-red-700 text-white hover:shadow-lg cursor-pointer"
+            }`}
             onClick={() => setOpenRazorpay(true)}
             disabled={totalAmount === 0}
           >

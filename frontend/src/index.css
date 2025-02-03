@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat+Alternates:wght@400;700&family=Playfair+Display:wght@400;700&family=Merriweather:wght@400;700&family=Funnel+Display:wght@100;400;700&family=Noto+Sans:wght@400;700&family=Noto+Sans+Display:wght@400;700&family=M+Plus+1p:wght@400;700&family=Poppins:wght@300;400;500;600;700&family=Rajdhani:wght@400;500;600;700&family=Orbitron:wght@400;500;600;700&family=Fira+Code:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500;600&family=Nova+Square&family=Turret+Road:wght@300;400;500;600;700&family=Gugi&family=Goldman:wght@400;700&family=Geo&family=Syne+Mono&family=Domine:wght@400;500;600;700&family=Koh+Santepheap:wght@100;300;400;700&family=Sree+Krushnadevaraya&family=Aldrich&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -34,6 +36,112 @@ body.dark ::-webkit-scrollbar-thumb {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   background-color: rgb(52, 52, 52);
   border-radius: 4px;
+}
+
+.font-inter {
+  font-family: "Inter", sans-serif;
+}
+
+.font-aldrich {
+  font-family: "Aldrich", sans-serif;
+}
+.font-montserrat-alternates {
+  font-family: "Montserrat Alternates", sans-serif;
+}
+.font-gugi {
+  font-family: "Gugi", cursive;
+}
+.font-koh {
+  font-family: "Koh Santepheap", cursive;
+}
+.font-krushna {
+  font-family: "Sree Krushnadevaraya", serif;
+}
+.font-funnel-display {
+  font-family: "Funnel Display", sans-serif;
+}
+
+.font-noto-sans {
+  font-family: "Noto Sans", sans-serif;
+}
+
+.font-noto-sans-display {
+  font-family: "Noto Sans Display", sans-serif;
+}
+
+.font-m-plus-1p {
+  font-family: "M Plus 1p", sans-serif;
+}
+
+.font-domine {
+  font-family: "Domine", serif;
+}
+
+.font-goldman {
+  font-family: "Goldman", cursive;
+}
+
+.font-geo {
+  font-family: "Geo", sans-serif;
+}
+
+.font-syne-mono {
+  font-family: "Syne Mono", monospace;
+}
+
+.font-poppins {
+  font-family: "Poppins", sans-serif;
+}
+
+.font-rajdhani {
+  font-family: "Rajdhani", sans-serif;
+}
+
+.font-orbitron {
+  font-family: "Orbitron", sans-serif;
+}
+.font-roboto {
+  font-family: "Roboto", sans-serif;
+}
+.font-nonito {
+  font-family: "Nunito", sans-serif;
+}
+.font-roboto-condensed {
+  font-family: "Roboto Condensed", sans-serif;
+}
+.font-playfair {
+  font-family: "Playfair Display", serif;
+}
+.font-merriweather {
+  font-family: "Merriweather", serif;
+}
+.font-audiowide {
+  font-family: "Audiowide", cursive;
+}
+.font-nova {
+  font-family: "Nova Square", cursive;
+}
+.font-turret {
+  font-family: "Turret Road", cursive;
+}
+.font-roboto-slab {
+  font-family: "Roboto Slab", serif;
+}
+.font-kanit {
+  font-family: "Kanit", sans-serif;
+}
+.font-bebas-neue {
+  font-family: "Bebas Neue", sans-serif;
+}
+.font-dm-serif-text {
+  font-family: "DM Serif Text", serif;
+}
+.font-fira-code {
+  font-family: "Fira Code", monospace;
+}
+
+.font-jetbrains {
+  font-family: "JetBrains Mono", monospace;
 }
 
 .hide-scroll ::-webkit-scrollbar {

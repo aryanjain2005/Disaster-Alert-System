@@ -1,4 +1,3 @@
-import { Loading } from "../icons/Loading";
 import {
   createContext,
   useContext,

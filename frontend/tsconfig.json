@@ -4,9 +4,8 @@
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
   ],
-{
   "compilerOptions": {
-    "baseUrl": "./src",  // Change to "src" so paths resolve correctly
+    "baseUrl": "./src", // Change to "src" so paths resolve correctly
     "paths": {
       "@/*": ["*"],
       "@components/*": ["components/*"],

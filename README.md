@@ -41,7 +41,7 @@ Your account has been created and now are ready to login and book parking slots 
 3. Select date and time slot and click on Submit. Each time slot books a slot for exactly 1 hour. If you want to book for more than 1 hour select as many time slots as you require. For example, if you select 2:00 AM slot, then slot will be booked from 2:00 AM to 2:59 AM.
 ![Date and Time Slot](./images/slot_selection.png)
 4. Select a Parking Slot which is available and click on Pay Now.
-![Slot](./images/slot.png)
+![Slot](./images/parking_slot.png)
 5. Proceed to pay.
 ![Payment](./images/payment.png)
 6. After successful transaction, you will receive a message confirming your booking.

@@ -37,13 +37,13 @@ Your account has been created and you are now ready to login and book parking sl
 1. Login to your account using the registered email and password.
 2. Select the required venue.
 ![select venue](./images/main_screen.png)
-3. Select date and time slot and click on "Submit"(this button enables only when you select at least one date and one time slot). Each time slot blocks exactly 1 hour. For example, if you select 2:00 AM slot, then slot will be booked from 2:00 AM to 2:59 AM only. If you want to book for more than 1 hour select as many time slots as you require.
+3. Select date and time slot and click on "Submit" (this button enables only when you select at least one date and one time slot). Each time slot blocks exactly 1 hour. For example, if you select the 2:00 AM slot, then the booking will be made from 2:00 AM to 2:59 AM only. If you want to book for more than 1 hour select as many time slots as you require.
 ![Date and Time Slot](./images/slot_selection.png)
 4. Select desired Parking Slot(s) which is(are) available and click on "Pay Now". The total is calculated as per the previous(step 3) and present(step 4) selections.
 ![Slot](./images/parking_slot.jpeg)
 5. Proceed to pay with your comfortable mode of payment.
 ![Payment](./images/payment.png)
-6. After a successful transaction, you will receive a message confirming your booking.
+6. After a successful transaction, you will receive a pop-up confirming your booking.
 ![Confirmation](./images/confirmation.png)
 You will also receive a confirmation email with the booking details and 2 OTPs which will be required at the venue for entering and exiting the parking area.
 In case you stay in the parking slot beyond your booked time slot, you have to pay extra which will be collected while exiting the parking area.

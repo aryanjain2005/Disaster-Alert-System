@@ -41,7 +41,6 @@ This report summarizes the testing process, findings, and recommendations for th
 | TC-05 | User registers | Register the user within the database | User login created | Pass |
 | TC-06 | User uses invalid email or phone number | Display error message | Error Message displayed | Pass |
 | TC-07 | User uses contact us links | Redirect to the desired page | Successfully redirected | Pass |
-| TC-08 | User access contracts | Should show legal contract details | Not working | Fail |
 
 
 ### **4.2 Usability Testing**
@@ -69,7 +68,8 @@ This report summarizes the testing process, findings, and recommendations for th
 ## **5. Issues & Recommendations**
 - **Issue 1:** Contract link not working
   **Recommendation:** Add the missing contract link  
-
+- **Issue 2:** Cancellation of parking slots not handled
+  **Recommendation:** Add the feature that enables the user to cancel the unwanted slots themselves.  
 
 ---
 

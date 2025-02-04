@@ -22,13 +22,13 @@ _The Smart Parking System Website is an intuitive online platform that allows us
 - **Backend:** Flask[Python]
 - **Database:** MongoDB
 
-## 3. Usage Guide
+## 3. User Guide
 ### 3.1 How to Create Account
 1. Click on the "Sign up" button.
 ![Sign Up](./images/login_page.png)
 2. Enter your email and click on "Enter".
 ![Enter email](./images/signup_email.png)
-3. You will receive an OTP on your email. Enter the required details along with OTP and click on "Enter".
+3. You will receive an OTP on your email. Enter the required details along with the OTP and click on "Enter".
 ![Enter details](./images/signup_form.png)
 Your account has been created and now you are ready to login and book parking slots as per requirement.
   
@@ -41,13 +41,13 @@ Your account has been created and now you are ready to login and book parking sl
 ![Date and Time Slot](./images/slot_selection.png)
 4. Select desired Parking Slot(s) which is(are) available and click on "Pay Now". The total is calculated as per the previous(step 3) and present(step 4) selections.
 ![Slot](./images/parking_slot.jpeg)
-5. Proceed to pay.
+5. Proceed to pay with your comfortable mode of payment.
 ![Payment](./images/payment.png)
 6. After a successful transaction, you will receive a message confirming your booking.
 ![Confirmation](./images/confirmation.png)
-You will also receive confirmation mail with 2 OTPs which will be required at the venue for entering and exiting the parking area.
+You will also receive confirmation mail with the booking details and 2 OTPs which will be required at the venue for entering and exiting the parking area.
 In case you stay in the parking slot beyond your booked time slot, you have to pay extra which will be collected while exiting the parking area.
-This extra 'fine' can be calculated based on the time we enter the 2nd OTP while exiting.
+This extra payment can be calculated based on the time we enter the 2nd OTP while exiting.
 
 ### 3.3 How to Reset Password
 1. Click on "forgot password" in the login page.

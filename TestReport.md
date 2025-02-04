@@ -68,7 +68,8 @@ This report summarizes the testing process, findings, and recommendations for th
 ## **5. Issues & Recommendations**
 - **Issue 1:** Contract link not working
   **Recommendation:** Add the missing contract link  
-
+- **Issue 2:** Cancellation of parking slots not handled
+  **Recommendation:** Add the feature that enables the user to cancel the unwanted slots themselves.  
 
 ---
 

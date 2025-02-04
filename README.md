@@ -47,6 +47,7 @@ Your account has been created and now are ready to login and book parking slots 
 6. After successful transaction, you will receive a message confirming your booking.
 ![Confirmation](./images/confirmation.png)
 You will also receive confirmation mail along with 2 OTPs which will be required at the venue for entering and exiting the parking area.
+In case you stay in the parking slot beyond your booked time slot, you have to pay extra which will be collected while exiting the parking area.
 
 ### 3.3 How to Reset Password
 1. Click on forgot password.

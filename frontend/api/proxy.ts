@@ -2,7 +2,7 @@
 
 export default async function handler(req, res) {
   const { method, query } = req;
-  const backendUrl = "http://10.8.1.10:8079"; // Your HTTP backend URL
+  const backendUrl = "http://14.139.34.101:8079"; // Your HTTP backend URL
 
   try {
     // Forward the request to your HTTP backend

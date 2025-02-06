@@ -12,7 +12,7 @@
   - Aryan Jain B22092 <br />
   - Eshaan B22039 <br />
   - Siddharth Shainesh B22135 <br />
-  - E. Vrinchi B22011 <br />
+  - E. Virinchi B22011 <br />
 
 ### Description
 
@@ -32,7 +32,7 @@ _The Smart Parking System Website is an intuitive online platform that allows us
 
 1. Click on "Sign up" in the login page.
    ![Sign Up](./images/login_page.png)
-2. Enter your email and press "Enter".
+2. Enter your institute email ID (only authorized IDs would be able to access the system) and press "Enter".
    ![Enter email](./images/signup_email.png)
 3. You will receive an OTP on your email. Enter the required details along with the OTP and press "Enter".
    ![Enter details](./images/signup_form.png)

@@ -100,7 +100,7 @@ const Login = () => {
         </div>
         <div className="flex max-sm:w-full  w-fit  flex-col items-center gap-3 max-sm:text-sm">
           <p className="text-2xl sm:text-4xl font-funnel-display dark:text-white">
-            Welcome Again!
+            Wellcome Again!
           </p>
           <p className="mb-4 text-lg font-funnel-display dark:text-[#FAFAFA] sm:text-xl">
             Please Login to continue
